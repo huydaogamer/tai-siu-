@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Dự Đoán Tài Xỉu</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .result {
+      font-size: 2rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Web Demo Dự Đoán Tài Xỉu</h1>
+  <p>Nhập mã bàn để dự đoán kết quả:</p>
+  <input type="text" id="codeInput" placeholder="Nhập mã MD5 hoặc mã bàn" />
+  <button onclick="predict()">Dự đoán</button>
+
+  <div class="result" id="output"></div>
+
+  <script>
+    function predict() {
+      const input = document.getElementById('codeInput').value.trim();
+      if (!input) {
+        document.getElementById('output').innerText = "Vui lòng nhập mã bàn hoặc chuỗi mã!";
+        return;
+      }
+
+      // Giả lập dự đoán (vì không thể giải MD5 ngược)
+      let sum = 0;
+      for (let i = 0; i < input.length; i++) {
+        sum += input.charCodeAt(i);
+      }
+      const dice1 = (sum % 6) + 1;
+      const dice2 = ((sum >> 2) % 6) + 1;
+      const dice3 = ((sum >> 4) % 6) + 1;
+      const total = dice1 + dice2 + dice3;
+      const result = total >= 11 ? 'Tài' : 'Xỉu';
+
+      document.getElementById('output').innerText = `Dự đoán: ${dice1}-${dice2}-${dice3} → Tổng ${total} (${result})`;
+    }
+  </script>
+</body>
+</html>
